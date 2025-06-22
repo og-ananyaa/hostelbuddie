@@ -174,7 +174,7 @@ const Buy = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:4200/posts/buy-sell/newBuyPosts',
+        `${process.env.REACT_APP_BACKEND_URL}/posts/buy-sell/newBuyPosts`,
         data,
         config
       );

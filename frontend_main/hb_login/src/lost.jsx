@@ -198,7 +198,8 @@ const Lost = () => {
       };
 
       const response = await axios.post(
-        '${process.env.REACT_APP_BACKEND_URL}/posts/lost-found/newLostPosts',
+        `${process.env.REACT_APP_BACKEND_URL}/posts/lost-found/newLostPosts`
+,
         data,
         config
       );
