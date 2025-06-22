@@ -7,11 +7,28 @@ import http from "http";
 import {Server} from "socket.io";
 
 const app=express();
-app.use(cors());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://hostelbuddie-mh6z.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true // include this only if you're using cookies/sessions
+}));
+
 const server=http.createServer(app);
 const io=new Server(server,{
     cors: {
-    origin: "http://localhost:5173", // frontend origin
+    origin: allowedOrigins , // frontend origin
     methods: ["GET", "POST"]
   }
 });
