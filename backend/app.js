@@ -25,7 +25,7 @@ const server=http.createServer(app);
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  "https://hostelbuddie-mh6z.vercel.app"
+  "https://hostelbuddie.vercel.app"
 ];
 
 const io = new Server(server, {
