@@ -348,6 +348,8 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
+import './roommate.css';
+
 
 const Roommate = () => {
   const [formFilled, setFormFilled] = useState(false);
@@ -734,3 +736,30 @@ const Roommate = () => {
 
 export default Roommate;
 
+const Snowfall = () => {
+  const snowflakes = Array(100).fill(0).map((_, i) => ({
+    id: i,
+    size: Math.random() * 10 + 5,
+    left: Math.random() * 100,
+    delay: Math.random() * 10,
+    duration: Math.random() * 10 + 5
+  }));
+
+  return (
+    <div className="snowfall">
+      {snowflakes.map((flake) => (
+        <div
+          key={flake.id}
+          className="snowflake"
+          style={{
+            width: `${flake.size}px`,
+            height: `${flake.size}px`,
+            left: `${flake.left}%`,
+            animationDuration: `${flake.duration}s`,
+            animationDelay: `${flake.delay}s`
+          }}
+        />
+      ))}
+    </div>
+  );
+};
