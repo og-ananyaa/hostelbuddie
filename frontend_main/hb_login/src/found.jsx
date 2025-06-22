@@ -185,7 +185,7 @@ const Found = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:4200/posts/lost-found/newFoundPosts',
+        '${process.env.REACT_APP_BACKEND_URL}/posts/lost-found/newFoundPosts',
         data,
         config
       );

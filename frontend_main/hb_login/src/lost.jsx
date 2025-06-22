@@ -198,7 +198,7 @@ const Lost = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:4200/posts/lost-found/newLostPosts',
+        '${process.env.REACT_APP_BACKEND_URL}/posts/lost-found/newLostPosts',
         data,
         config
       );
@@ -222,7 +222,7 @@ const Lost = () => {
 
   const refetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:4200/posts/lost-found');
+      const response = await axios.get('${process.env.REACT_APP_BACKEND_URL}/posts/lost-found');
       // Assuming you have a way to update the posts in the same component
       // If you're using a global state or context, you'd update it here.
       console.log('Fetched posts:', response.data);

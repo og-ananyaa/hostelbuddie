@@ -19,7 +19,7 @@ function Register() {
     }
 
     try {
-      const response = await axios.post('http://localhost:4200/auth/register', { username, emailid, password });
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/register`, { username, emailid, password });
       console.log(response.data);
       navigate('/login');
     } catch (err) {

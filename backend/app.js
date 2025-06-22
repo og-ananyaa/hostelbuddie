@@ -19,7 +19,7 @@ dotenv.config();//to load the environment variables
 
 // const PORT=process.env.PORT;
 //to access port
-const PORT=4200;
+const PORT = process.env.PORT || 4200;
 
 
 app.use(express.json());
