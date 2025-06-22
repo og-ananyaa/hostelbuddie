@@ -66,7 +66,7 @@ const MatchesPage = () => {
     // Fetch matches when the component loads
     const fetchMatches = async () => {
       try {
-   const response = await axios.post(`${process.env.REACT_APP_ML}/find_matches`, {
+   const response = await axios.post(`${import.meta.env.VITE_ML}/find_matches`, {
   sheet_url: "https://docs.google.com/spreadsheets/d/1LthSMETRap-PO-tuC5H2ycif27c7kzKnUUdwpGUCwz0/export?format=csv",
 });
 

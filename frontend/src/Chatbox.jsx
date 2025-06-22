@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { useParams, useLocation } from "react-router-dom"; 
 import "./Chatbox.css";
-const socket = io("${process.env.REACT_APP_BACKEND_URL}");
+const socket = io(import.meta.env.VITE_BACKEND_URL);
+
 
 export default function ChatBox() {
     const currentUser=localStorage.getItem("emailid");

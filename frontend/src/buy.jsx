@@ -173,8 +173,9 @@ const Buy = () => {
         },
       };
 
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/posts/buy-sell/newBuyPosts`,
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/posts/buy-sell/newBuyPosts`,
+
+       
         data,
         config
       );
