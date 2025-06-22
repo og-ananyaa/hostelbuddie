@@ -82,7 +82,7 @@ const Sell = () => {
 
   const refetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:4200/posts/buy-sell');
+      const response = await axios.get('${import.meta.env.VITE_BACKEND_URL}/posts/buy-sell');
       // Assuming you have a way to update the posts in the same component
       // If you're using a global state or context, you'd update it here.
       console.log('Fetched posts:', response.data);

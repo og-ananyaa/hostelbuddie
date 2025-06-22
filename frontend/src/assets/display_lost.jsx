@@ -13,7 +13,7 @@ const Display_lost = () => {
     // setPosts(updatedPosts);
     const emailid=localStorage.getItem('emailid');
     try{
-      const response=await fetch(`http://localhost:4200/posts/lost-found/delete_lost/${postid}`,{
+      const response=await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/lost-found/delete_lost/${postid}`,{
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${localStorage.getItem("generatetoken")}`, // Replace with your actual token

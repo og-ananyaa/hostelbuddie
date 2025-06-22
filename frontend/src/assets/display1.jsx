@@ -9,7 +9,7 @@
 //   return (
 //     <div className="display-container">
 //       {(
-//         <div className="posts-container">
+//         <div className="posts-clontainer">
 //           <h2>Items people want to buy</h2>
 //           {posts1.length > 0 ? (
 //             posts1.map((post) => (
@@ -77,7 +77,7 @@ const Display1 = () => {
     // setPosts(updatedPosts);
     const emailid=localStorage.getItem('emailid');
     try{
-      const response=await fetch(`http://localhost:4200/posts/buy-sell/delete_buy/${postid}`,{
+      const response=await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/buy-sell/delete_buy/${postid}`,{
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${localStorage.getItem("generatetoken")}`, // Replace with your actual token

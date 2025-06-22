@@ -8,10 +8,6 @@ import {Server} from "socket.io";
 
 const app=express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://hostelbuddie-mh6z.vercel.app"
-];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -26,12 +22,25 @@ app.use(cors({
 }));
 
 const server=http.createServer(app);
-const io=new Server(server,{
-    cors: {
-    origin: allowedOrigins , // frontend origin
-    methods: ["GET", "POST"]
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://hostelbuddie-mh6z.vercel.app"
+];
+
+const io = new Server(server, {
+  cors: {
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow Postman, server-side, etc.
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS (Socket.IO)"));
+    },
+    methods: ["GET", "POST"],
+    credentials: true,
   }
 });
+
+
 dotenv.config();//to load the environment variables
 
 // const PORT=process.env.PORT;

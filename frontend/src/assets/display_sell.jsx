@@ -12,7 +12,7 @@ const Display_sell = () => {
     // setPosts(updatedPosts);const emailid=localStorage.getItem('emailid');
     try{
       const emailid=localStorage.getItem('emailid');
-      const response=await fetch(`http://localhost:4200/posts/buy-sell/delete_Sell/${postid}`,{
+      const response=await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/buy-sell/delete_Sell/${postid}`,{
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${localStorage.getItem("generatetoken")}`, // Replace with your actual token

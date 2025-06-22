@@ -26,7 +26,7 @@ function Login() {
     }
 
     try {
-      const response = await axios.post('http://localhost:4200/auth/login', { emailid, password });
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, { emailid, password });
       console.log('Response from server:', response.data);
       console.log(response.data.generateToken)
       localStorage.setItem('emailid', emailid);
