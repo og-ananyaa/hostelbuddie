@@ -11,7 +11,7 @@ The project aims to provide features such as roommate finder using machine learn
 
 3. **Buy/Sell Portal for Notes and Supplies**: A dedicated platform where students can buy or sell academic materials such as notes, lab coats, or drafting tools. This feature will be particularly beneficial for inter-year use, connecting those looking to sell items with those who need them but otherwise wouldn't know who to contact.
 
-## Tech Stack Used (till now):
+## Tech Stack Used :
 
 - **Frontend**: 
   - HTML
@@ -50,15 +50,50 @@ The project aims to provide features such as roommate finder using machine learn
 
 - **Testing**:
   - Postman for API testing
- 
+
+ ## Getting Started
+Follow these steps to run the project locally.
+
+### Prerequisites
+Ensure you have the following installed:
+- Node.js
+- npm or yarn
+- MongoDB
+
+### Installation & Setup
+#### 1. Clone the repository
+```bash
+git clone https://github.com/og-ananyaa/hostelbuddie
+cd hostelbuddie
+```
+
+#### 2. Start the Backend
+```bash
+cd backend
+npm install
+node app.js
+```
+
+#### 3. Start the Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+#### 4. Start the ML Model
+```bash
+cd ML_MODEL
+python app.py
+```
 
 
 ## Contributors
-
+-**Ananyaa Priyadarshini**<br>
 -**Amisha Gupta**<br>
 -**Himanshi Garg**<br>
 -**Mihira Gupta**<br>
--**Ananyaa Priyadarshini**
+
 
 
 
