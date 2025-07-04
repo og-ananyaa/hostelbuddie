@@ -1,4 +1,4 @@
-import posts from "../models/posts_found.js";
+import posts_found from "../models/posts_found.js";
 import users from "../models/users.js";
 import express from "express"
 const app=express();
@@ -14,7 +14,7 @@ export const makeFoundPost=async(req,resp)=>{
             return resp.status(404).json({message:"User not found!"});
         }
         
-        const newpost=new posts({
+        const newpost=new posts_found({
             emailid,
            picturepath:pictureUrl, //cloudinary url saved to post
             itemName,
@@ -36,7 +36,7 @@ export const makeFoundPost=async(req,resp)=>{
 //feed
 export const readFoundFeed=async(req,resp)=>{
     try{
-        const post=await posts.find();
+        const post=await posts_found.find();
         resp.status(200).json(post);
         //console.log(post);
     }
@@ -49,7 +49,7 @@ export const readFoundFeed=async(req,resp)=>{
 export const readFoundSpecific=async(req,resp)=>{
     try{
         const id=req.params.postid;
-        const post=await posts.find({_id:id});
+        const post=await posts_found.find({_id:id});
         resp.status(200).json(post);
     }
     catch(error){
@@ -63,9 +63,9 @@ export const updateFound=async(req,resp)=>{
         const id=req.params.postid;
         const {username,comment}=req.body;
         const newcomment={ username, comment};
-        const post=await posts.findById(id);
+        const post=await posts_found.findById(id);
         //posts.comments.push(newcomment);
-        const updated=await posts.findOneAndUpdate(
+        const updated=await posts_found.findOneAndUpdate(
             {_id:id},
             { $push: { comments: newcomment } },
             {new:true}
@@ -82,7 +82,7 @@ export const deleteFoundPost=async(req,resp)=>{
     try{
         const postid=req.params.postid;
         const email_local=req.body.emailid;
-        const result=await posts.findOne({_id:postid});
+        const result=await posts_found.findOne({_id:postid});
         if(!result){
             return resp.status(404).send("This post doesn't exist");
         }
@@ -93,7 +93,7 @@ export const deleteFoundPost=async(req,resp)=>{
             console.log(email_local);
             if(email_actual!==email_local)
                 return resp.status(403).send("You didn't create this post! Can't delete");
-            const deleted=await posts.deleteOne({_id:postid});
+            const deleted=await posts_found.deleteOne({_id:postid});
             if(deleted.deletedCount===1)
                 return resp.status(200).send("Post has been deleted successfully!");
         }

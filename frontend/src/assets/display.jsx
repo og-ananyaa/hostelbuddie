@@ -200,80 +200,85 @@
 // };
 
 // export default Display;
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./display.css";
 
 const Display = () => {
   const location = useLocation();
-  const { posts: initialPosts } = location.state || { posts: [] };
-  const [posts, setPosts] = useState(initialPosts);
+ const type = location.state?.type || "found";
 
-  // const handleDelete = (postId) => {
-  //   const updatedPosts = posts.filter((post) => post._id !== postId);
-  //   setPosts(updatedPosts);
-  // };
-  const handleDelete = async(postid) => {
-    // const updatedPosts = posts.filter((post) => post._id !== postId);
-    // setPosts(updatedPosts);
-    const emailid=localStorage.getItem('emailid');
-    try{
-      const response=await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/lost-found/delete_found/${postid}`,{
-        method: "DELETE",
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("generatetoken")}`, // Replace with your actual token
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({emailid}),
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    console.log("Fetching posts for type:", type);
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/lost-found/${type}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("generatetoken")}`,
+          },
         });
-        if (response.ok) {
-          setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postid));
-      alert("Post deleted successfully");
-         
-        } else if (response.status === 403) {
-          // If the backend returns 403 (Forbidden), it means the user didn't create the post
-          const errorMessage = await response.text(); // You can also use response.json() if it's a JSON response
-          alert(errorMessage || "You didn't create this post!");
-        } else {
-          alert("Failed to delete post");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+        setPosts(data);
       } catch (error) {
-        console.error("Error deleting post:", error);
-        alert("Error deleting post");
+        console.error("Error fetching posts:", error);
       }
     };
 
+    fetchPosts();
+  }, [type]);
+
+  const handleDelete = async (postid) => {
+    const emailid = localStorage.getItem("emailid");
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/lost-found/delete_${type}/${postid}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("generatetoken")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ emailid }),
+      });
+
+      if (response.ok) {
+        setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postid));
+        alert("Post deleted successfully");
+      } else if (response.status === 403) {
+        const errorMessage = await response.text();
+        alert(errorMessage || "You didn't create this post!");
+      } else {
+        alert("Failed to delete post");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      alert("Error deleting post");
+    }
+  };
 
   return (
     <div className="display-container">
       <div className="posts-container">
-        <h2 style={{ fontFamily: "'Playfair Display', serif" }}>Items Found</h2>
+        <h2 style={{ fontFamily: "'Playfair Display', serif" }}>
+          {type === "lost" ? "Items Lost" : "Items Found"}
+        </h2>
         {posts.length > 0 ? (
           posts.map((post) => (
             <div key={post._id} className="post-card">
-              {/* Delete Button */}
-              <button
-                className="delete-button"
-                onClick={() => handleDelete(post._id)}
-              >
+              <button className="delete-button" onClick={() => handleDelete(post._id)}>
                 &times;
               </button>
-              <img
-                src={post.picturepath}
-                alt={post.itemName}
-                className="post-image"
-              />
+              <img src={post.picturepath} alt={post.itemName} className="post-image" />
               <div className="post-text">
-                <p>
-                  <span><b>Item Name:</b></span> {post.itemName}
-                </p>
-                <p>
-                  <span><b>Description:</b></span> {post.itemDescription}
-                </p>
-                <p>
-                  <span><b>Contact:</b></span> {post.contactInformation}
-                </p>
+                <p><span><b>Item Name:</b></span> {post.itemName}</p>
+                <p><span><b>Description:</b></span> {post.itemDescription}</p>
+                <p><span><b>Contact:</b></span> {post.contactInformation}</p>
               </div>
             </div>
           ))
