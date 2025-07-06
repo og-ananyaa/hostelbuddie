@@ -83,7 +83,7 @@ npm run dev
 
 #### 4. Start the ML Model
 ```bash
-cd ML_MODEL
+cd ML_model
 python app.py
 ```
 
